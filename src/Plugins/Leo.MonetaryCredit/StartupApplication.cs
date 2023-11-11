@@ -1,6 +1,7 @@
 ﻿using Grand.Business.Core.Interfaces.Checkout.Payments;
 using Grand.Business.Core.Interfaces.Cms;
 using Grand.Infrastructure;
+using Leo.MonetaryCredit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,8 +13,8 @@ namespace Payments.BrainTree
     {
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IPaymentProvider, BrainTreePaymentProvider>();
-            services.AddScoped<IWidgetProvider, BrainTreeWidgetProvider>();
+            services.AddScoped<IPaymentProvider, MonetaryCreditPaymentProvider>();
+            services.AddScoped<IWidgetProvider, MonetaryCreditWidgetProvider>();
         }
 
         public int Priority => 10;

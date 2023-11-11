@@ -16,7 +16,7 @@ namespace Leo.MonetaryCredit.Domain
         public Guid CustomerID { get; set; }
 
         /// <summary>
-        /// 购买积分
+        /// 购买积分 
         /// </summary>
         public decimal BuyCredit { get; set; }
 

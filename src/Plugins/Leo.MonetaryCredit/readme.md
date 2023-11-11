@@ -18,6 +18,22 @@
 	钱包的显示页面： 用户的消费积分，用户的活动积分。
 
 
+添加的活动日志类型：
+用户充值		AddRechange
+撤回充值		RecallRechange
+充值消费记录	UseRechange    // 可以是像银行卡转账 或是 积分兑换
+
+获取消费积分	AddBuyCredit
+撤回消费积分	RecallBuyCredit
+使用消费积分	UseBuyCredit
+获取供应积分	AddSellCredit
+撤回供应积分	RecallSellCredit
+使用供应积分	UseSellCredit
+获取活动积分	AddActivityCredit
+撤回活动积分	RecallActivityCredit
+使用活动积分	UseActivityCredit
+
+
 
 
 问题解决：
