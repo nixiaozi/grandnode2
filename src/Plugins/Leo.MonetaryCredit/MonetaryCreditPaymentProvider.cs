@@ -17,6 +17,9 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using Leo.MonetaryCredit.Services;
+using MediatR;
+using Grand.Domain.Data.LiteDb;
 
 namespace Leo.MonetaryCredit
 {
@@ -27,19 +30,25 @@ namespace Leo.MonetaryCredit
         private readonly IServiceProvider _serviceProvider;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly MonetaryCreditPaymentSettings _monetaryCreditPaymentSettings;
+        private readonly IMonetaryCreditService _monetaryCreditService;
+        private readonly IMediator _mediator;
 
         public MonetaryCreditPaymentProvider(
             ITranslationService translationService,
             ICustomerService customerService,
             IServiceProvider serviceProvider,
             IHttpContextAccessor httpContextAccessor,
-            MonetaryCreditPaymentSettings monetaryCreditPaymentSettings)
+            MonetaryCreditPaymentSettings monetaryCreditPaymentSettings,
+            IMonetaryCreditService monetaryCreditService,
+            IMediator mediator
+            )
         {
             _translationService = translationService;
             _customerService = customerService;
             _serviceProvider = serviceProvider;
             _httpContextAccessor = httpContextAccessor;
             _monetaryCreditPaymentSettings = monetaryCreditPaymentSettings;
+            _monetaryCreditService = monetaryCreditService;
         }
 
         public Task<string> GetControllerRouteName()
@@ -62,18 +71,18 @@ namespace Leo.MonetaryCredit
             //validate
             var validator = new PaymentInfoValidator(_monetaryCreditPaymentSettings, _translationService);
             var paymentInfoModel = new PaymentInfoModel();
-            if (model.TryGetValue("CardholderName", out var cardholderName))
-                paymentInfoModel.CardholderName = cardholderName;
-            if (model.TryGetValue("CardNumber", out var cardNumber))
-                paymentInfoModel.CardNumber = cardNumber;
-            if (model.TryGetValue("CardCode", out var cardCode))
-                paymentInfoModel.CardCode = cardCode;
-            if (model.TryGetValue("ExpireMonth", out var expireMonth))
-                paymentInfoModel.ExpireMonth = expireMonth;
-            if (model.TryGetValue("ExpireYear", out var expireYear))
-                paymentInfoModel.ExpireYear = expireYear;
-            if (model.TryGetValue("CardNonce", out var cardNonce))
-                paymentInfoModel.CardNonce = cardNonce;
+            //if (model.TryGetValue("CardholderName", out var cardholderName))
+            //    paymentInfoModel.CardholderName = cardholderName;
+            //if (model.TryGetValue("CardNumber", out var cardNumber))
+            //    paymentInfoModel.CardNumber = cardNumber;
+            //if (model.TryGetValue("CardCode", out var cardCode))
+            //    paymentInfoModel.CardCode = cardCode;
+            //if (model.TryGetValue("ExpireMonth", out var expireMonth))
+            //    paymentInfoModel.ExpireMonth = expireMonth;
+            //if (model.TryGetValue("ExpireYear", out var expireYear))
+            //    paymentInfoModel.ExpireYear = expireYear;
+            //if (model.TryGetValue("CardNonce", out var cardNonce))
+            //    paymentInfoModel.CardNonce = cardNonce;
 
             var validationResult = await validator.ValidateAsync(paymentInfoModel);
             if (validationResult.IsValid) return await Task.FromResult(warnings);
@@ -83,103 +92,40 @@ namespace Leo.MonetaryCredit
 
         public async Task<PaymentTransaction> SavePaymentInfo(IDictionary<string, string> model)
         {
-            if (model.TryGetValue("CardNonce", out var cardNonce) && !StringValues.IsNullOrEmpty(cardNonce))
-                _httpContextAccessor.HttpContext!.Session.SetString("CardNonce", cardNonce);
+            //if (model.TryGetValue("CardNonce", out var cardNonce) && !StringValues.IsNullOrEmpty(cardNonce))
+            //    _httpContextAccessor.HttpContext!.Session.SetString("CardNonce", cardNonce);
 
-            if (model.TryGetValue("CardholderName", out var cardholderName) &&
-                !StringValues.IsNullOrEmpty(cardholderName))
-                _httpContextAccessor.HttpContext!.Session.SetString("CardholderName", cardholderName);
+            //if (model.TryGetValue("CardholderName", out var cardholderName) &&
+            //    !StringValues.IsNullOrEmpty(cardholderName))
+            //    _httpContextAccessor.HttpContext!.Session.SetString("CardholderName", cardholderName);
 
-            if (model.TryGetValue("CardNumber", out var cardNumber) && !StringValues.IsNullOrEmpty(cardNumber))
-                _httpContextAccessor.HttpContext!.Session.SetString("CardNumber", cardNumber);
+            //if (model.TryGetValue("CardNumber", out var cardNumber) && !StringValues.IsNullOrEmpty(cardNumber))
+            //    _httpContextAccessor.HttpContext!.Session.SetString("CardNumber", cardNumber);
 
-            if (model.TryGetValue("ExpireMonth", out var expireMonth) && !StringValues.IsNullOrEmpty(expireMonth))
-                _httpContextAccessor.HttpContext!.Session.SetString("ExpireMonth", expireMonth);
+            //if (model.TryGetValue("ExpireMonth", out var expireMonth) && !StringValues.IsNullOrEmpty(expireMonth))
+            //    _httpContextAccessor.HttpContext!.Session.SetString("ExpireMonth", expireMonth);
 
-            if (model.TryGetValue("ExpireYear", out var expireYear) && !StringValues.IsNullOrEmpty(expireYear))
-                _httpContextAccessor.HttpContext!.Session.SetString("ExpireYear", expireYear);
+            //if (model.TryGetValue("ExpireYear", out var expireYear) && !StringValues.IsNullOrEmpty(expireYear))
+            //    _httpContextAccessor.HttpContext!.Session.SetString("ExpireYear", expireYear);
 
-            if (model.TryGetValue("CardCode", out var creditCardCvv2) && !StringValues.IsNullOrEmpty(creditCardCvv2))
-                _httpContextAccessor.HttpContext!.Session.SetString("CardCode", creditCardCvv2);
+            //if (model.TryGetValue("CardCode", out var creditCardCvv2) && !StringValues.IsNullOrEmpty(creditCardCvv2))
+            //    _httpContextAccessor.HttpContext!.Session.SetString("CardCode", creditCardCvv2);
 
             return await Task.FromResult<PaymentTransaction>(null);
         }
 
         /// <summary>
-        /// Process a payment
+        /// Process a payment  支付
         /// </summary>
         /// <returns>Process payment result</returns>
         public async Task<ProcessPaymentResult> ProcessPayment(PaymentTransaction paymentTransaction)
         {
-            var processPaymentResult = new ProcessPaymentResult();
 
-            //get customer
-            var customer = await _customerService.GetCustomerById(paymentTransaction.CustomerId);
+            // get customer
+            // var customer = await _customerService.GetCustomerById(paymentTransaction.CustomerId);
 
-            //get settings
-            //var useSandBox = _monetaryCreditPaymentSettings.UseSandBox;
-            //var merchantId = _monetaryCreditPaymentSettings.MerchantId;
-            //var publicKey = _monetaryCreditPaymentSettings.PublicKey;
-            //var privateKey = _monetaryCreditPaymentSettings.PrivateKey;
-
-            //new gateway
-            //var gateway = new BraintreeGateway {
-            //    Environment = useSandBox ? Braintree.Environment.SANDBOX : Braintree.Environment.PRODUCTION,
-            //    MerchantId = merchantId,
-            //    PublicKey = publicKey,
-            //    PrivateKey = privateKey
-            //};
-
-            //new transaction request
-            //var transactionRequest = new TransactionRequest {
-            //    Amount = Convert.ToDecimal(paymentTransaction.TransactionAmount)
-            //};
-
-            //if (_monetaryCreditPaymentSettings.Use3DS)
-            //{
-            //    transactionRequest.PaymentMethodNonce =
-            //        _httpContextAccessor.HttpContext!.Session.GetString("CardNonce")!;
-            //}
-            //else
-            //{
-            //    //transaction credit card request
-            //    //var transactionCreditCardRequest = new TransactionCreditCardRequest {
-            //    //    Number = _httpContextAccessor.HttpContext!.Session.GetString("CardNumber")!,
-            //    //    CVV = _httpContextAccessor.HttpContext.Session.GetString("CardCode")!,
-            //    //    ExpirationDate = _httpContextAccessor.HttpContext.Session.GetString("ExpireMonth")! + "/" +
-            //    //                     _httpContextAccessor.HttpContext.Session.GetString("ExpireYear")!
-            //    //};
-            //    //transactionRequest.CreditCard = transactionCreditCardRequest;
-            //}
-
-            //address request
-            //var addressRequest = new AddressRequest {
-            //    FirstName = customer.BillingAddress.FirstName,
-            //    LastName = customer.BillingAddress.LastName,
-            //    StreetAddress = customer.BillingAddress.Address1,
-            //    PostalCode = customer.BillingAddress.ZipPostalCode
-            //};
-            //transactionRequest.BillingAddress = addressRequest;
-
-            ////transaction options request
-            //var transactionOptionsRequest = new TransactionOptionsRequest {
-            //    SubmitForSettlement = true
-            //};
-            //transactionRequest.Options = transactionOptionsRequest;
-
-            ////sending a request
-            //var result = await gateway.Transaction.SaleAsync(transactionRequest);
-
-            //result
-            //if (result.IsSuccess())
-            //{
-            //    processPaymentResult.PaidAmount = paymentTransaction.TransactionAmount;
-            //    processPaymentResult.NewPaymentTransactionStatus = Grand.Domain.Payments.TransactionStatus.Paid;
-            //}
-            //else
-            //{
-            //    processPaymentResult.AddError("Error processing payment." + result.Message);
-            //}
+            // 添加余额使用记录已经
+            var processPaymentResult = await _monetaryCreditService.MonetaryCreditPayment(paymentTransaction);
 
             return processPaymentResult;
         }

@@ -21,18 +21,26 @@
 添加的活动日志类型：
 用户充值		AddRechange
 撤回充值		RecallRechange
-充值消费记录	UseRechange    // 可以是像银行卡转账 或是 积分兑换
+充值消费记录	UseRechange    // 可以是像转账到银行卡 或是 余额消费	
 
 获取消费积分	AddBuyCredit
 撤回消费积分	RecallBuyCredit
-使用消费积分	UseBuyCredit
+
 获取供应积分	AddSellCredit
 撤回供应积分	RecallSellCredit
-使用供应积分	UseSellCredit
+
 获取活动积分	AddActivityCredit
 撤回活动积分	RecallActivityCredit
-使用活动积分	UseActivityCredit
 
+
+使用积分	UseCredit     // 就是使用所有的积分  有一个使用的类型字段
+
+
+开发步骤:
+* 首先需要有用户界面显示信用货币模块的余额 各种积分的值 以及 
+* 充值记录详细(可测回操作)
+* 用户提现操作
+* 各种积分变动的历史记录
 
 
 
@@ -49,7 +57,8 @@
 消费金额。如果你是消费者有钱之后就能消费，然后通过
 
 
-
+4.为什么会有这个问题?Commands都是什么 比如 AddBrandCommand;
+这些都是中介者模式使用事务通知的模式; 如果使用事件通知那么就是Evnet结尾的.
 
 
 
