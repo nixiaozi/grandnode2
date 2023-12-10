@@ -124,6 +124,7 @@ public MonetaryCreditPaymentPlugin(
             //locales
             await this.AddOrUpdatePluginTranslateResource(_translationService, _languageService, "Leo.MonetaryCredit.FriendlyName", "MonetaryCredit payment");
             await this.AddOrUpdatePluginTranslateResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.PaymentMethodDescription", "Pay by customer rechange remain");
+            await this.AddOrUpdatePluginTranslateResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.MenusName", "MonetaryCredit");
 
 
             // 添加活动日志类型
@@ -143,6 +144,7 @@ public MonetaryCreditPaymentPlugin(
             //locales
             await this.DeletePluginTranslationResource(_translationService, _languageService, "Leo.MonetaryCredit.FriendlyName");
             await this.DeletePluginTranslationResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.PaymentMethodDescription");
+            await this.DeletePluginTranslationResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.MenusName");
 
             // 删除活动日志类型
             foreach(var item in activityLogTypes)

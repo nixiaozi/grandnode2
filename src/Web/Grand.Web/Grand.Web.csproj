@@ -58,6 +58,9 @@
 		<Compile Remove="Plugins\**" />
 		<EmbeddedResource Remove="Plugins\**" />
 		<None Remove="Plugins\**" />
+		<None Remove="App_Data\Resources\ChinaLanguage.xml" />
+		<None Remove="App_Data\Resources\Installation\installation.cn.xml" />
+		<None Remove="App_Data\Settings.cfg" />
 		<Content Update="Plugins\**">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>

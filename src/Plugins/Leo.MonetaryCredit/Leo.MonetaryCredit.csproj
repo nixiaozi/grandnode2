@@ -25,6 +25,10 @@
     <RemoveDir Directories="..\..\Web\Grand.Web\Plugins\Leo.MonetaryCredit\refs" />
     <RemoveDir Directories="..\..\Web\Grand.Web\Plugins\Leo.MonetaryCredit \ref" />
   </Target>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\_TwoColumns.cshtml" />
+  </ItemGroup>
 	
   <ItemGroup>
     <ProjectReference Include="..\..\Business\Grand.Business.Authentication\Grand.Business.Authentication.csproj">
@@ -84,7 +88,20 @@
   </ItemGroup>
 	
   <ItemGroup>
+    <Folder Include="Models\User\" />
     <Folder Include="Validators\" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Shared\_TwoColumns.cshtml" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Shared\_TwoColumns.cshtml" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <None Include="Views\Shared\_TwoColumns.cshtml" />
   </ItemGroup>
 
 </Project>

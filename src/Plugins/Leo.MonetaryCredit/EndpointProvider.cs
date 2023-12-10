@@ -12,6 +12,12 @@ namespace Leo.MonetaryCredit
                  "Plugins/PaymentMonetaryCredit/PaymentInfo",
                  new { controller = "PaymentMonetaryCredit", action = "PaymentInfo", area = "" }
             );
+
+            endpointRouteBuilder.MapControllerRoute("Plugin.UserMonetaryCreditInfo",
+                 "Plugins/MonetaryCreditUser/Default",
+                 new { controller = "MonetaryCreditUser", action = "Default", area = "" }
+            );
+
         }
         public int Priority => 0;
 

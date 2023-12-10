@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "_Layout";
+
+}
+
+@section meta {
+    @await RenderSectionAsync("meta", required: false)
+}
+@section head {
+    @await RenderSectionAsync("head", required: false)
+}
+
+
+<div id="TwoColumns" class="row custom-container mt-3">
+    <div class="d-lg-none d-block">
+        <div class="col-12">
+            <button id="sidebar-mobile-button" class="btn btn-outline-info" v-b-toggle.sidebar-mobile><b-icon icon="layout-sidebar-inset"></b-icon> @Loc["catalog.selectors.fiters"]</button>
+        </div>
+        <b-sidebar id="sidebar-mobile"
+                   backdrop
+                   left
+                   shadow>
+        </b-sidebar>
+    </div>
+    <div class="col-lg-3 col-md-12 generalLeftSide order-1">
+        @if (IsSectionDefined("left"))
+        {
+            @await RenderSectionAsync("left")
+        }
+    </div>
+    <div class="col-lg-9 col-md-12 generalSideRight order-2">
+        @await Component.InvokeAsync("Widget", new { widgetZone = "leo_monetary_main_column_before" })
+        @RenderBody()
+        @await Component.InvokeAsync("Widget", new { widgetZone = "leo_monetarymain_column_after" })
+    </div>
+</div>
+<script asp-location="Footer" asp-order="300">
+    document.addEventListener("DOMContentLoaded", function () {
+        var leftSide = document.querySelector('.generalLeftSide');
+        function LeftSideBar() {
+            if (991 > (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth)) {
+                document.querySelector("#sidebar-mobile .b-sidebar-body").appendChild(leftSide);
+            } else {
+                document.getElementById("TwoColumns").appendChild(leftSide);
+            }
+        }
+        LeftSideBar();
+        window.addEventListener("resize", function () {
+            LeftSideBar();
+        });
+    });
+</script>
