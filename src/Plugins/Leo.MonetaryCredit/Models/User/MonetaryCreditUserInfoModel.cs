@@ -1,19 +1,24 @@
-﻿using Grand.Domain;
-using Grand.Infrastructure.Models;
+﻿using Grand.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Leo.MonetaryCredit.Domain
+namespace Leo.MonetaryCredit.Models.User
 {
-    public class CustomerBalanceData : BaseEntity
+    public class MonetaryCreditUserInfoModel:BaseModel
     {
         /// <summary>
         /// 客户编号
         /// </summary>
         public string CustomerID { get; set; }
+
+        /// <summary>
+        /// 客户名称
+        /// </summary>
+        public string CustomerName { get; set; }
+
 
         /// <summary>
         /// 当前账户余额
@@ -30,6 +35,7 @@ namespace Leo.MonetaryCredit.Domain
         /// 通过货币信用兑换的金额
         /// </summary>
         public decimal TotalRechangeByCredit { get; set; }
+
 
         /// <summary>
         /// 现有购买积分 
@@ -67,10 +73,8 @@ namespace Leo.MonetaryCredit.Domain
         /// </summary>
         public int UserCreditScore { get; set; }
 
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTime CreateDate { get; set; }
+
+
 
     }
 }

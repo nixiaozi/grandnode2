@@ -7,6 +7,7 @@ using Grand.Domain.Data;
 using Grand.Domain.Orders;
 using Grand.Infrastructure.Extensions;
 using Leo.MonetaryCredit.Domain;
+using Leo.MonetaryCredit.Services;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -21,49 +22,27 @@ namespace Leo.MonetaryCredit.Infrastructure.Handler.Rechange
     {
 
         private readonly ITranslationService _translationService;
-        private readonly IRepository<CustomerBalanceData> _customerCreditDataRepository;
+        //private readonly IRepository<CustomerBalanceData> _customerCreditDataRepository;
         private readonly IMediator _mediator;
+        private readonly IMonetaryCreditService _monetaryCreditService;
 
 
         public CustomerRegisteredInitRechangeAccountHandler(
             ITranslationService translationService,
-            IRepository<CustomerBalanceData> customerCreditDataRepository,
-            IMediator mediator
+            //IRepository<CustomerBalanceData> customerCreditDataRepository,
+            IMediator mediator,
+            IMonetaryCreditService monetaryCreditService
             )
         {
             _translationService = translationService;
-            _customerCreditDataRepository = customerCreditDataRepository;
+           // _customerCreditDataRepository = customerCreditDataRepository;
             _mediator = mediator;
+            _monetaryCreditService = monetaryCreditService;
         }
 
         public async Task Handle(CustomerRegisteredEvent notification, CancellationToken cancellationToken)
         {
-            var data = await _customerCreditDataRepository.GetByIdAsync(notification.Customer.Id);
-
-            if ( data == null )
-            {
-                data = new CustomerBalanceData {
-                    ActionCreditRemain = 0,
-                    TotalUsedActionCredit = 0,
-                    BuyCreditRemain = 0,
-                    CurrentBalanceRemain = 0,
-                    TotalRechangeByCredit = 0,
-                    TotalRechangeByThird = 0,
-                    CustomerID = notification.Customer.CustomerGuid,
-                    SellCreditRemain = 0,
-                    TotalUsedSellCredit = 0,
-                    UserCreditScore = 0,
-                    TotalUsedBuyCredit = 0,
-                    CreateDate = DateTime.Now,
-                };
-
-                await _customerCreditDataRepository.InsertAsync(data);
-
-                //event notification
-                await _mediator.EntityInserted(data);
-
-            }
-
+           await _monetaryCreditService.GetUserMonetaryCreditData(notification.Customer.Id);
 
         }
 

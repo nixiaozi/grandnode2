@@ -2,13 +2,18 @@
 using Grand.Business.Core.Utilities.Checkout;
 using Grand.Domain.Data;
 using Grand.Domain.Payments;
+using Grand.Infrastructure.Extensions;
 using Leo.MonetaryCredit.Domain;
+using MassTransit.Mediator;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using static MassTransit.ValidationResultExtensions;
+using IMediator = MediatR.IMediator;
 
 namespace Leo.MonetaryCredit.Services
 {
@@ -20,7 +25,8 @@ namespace Leo.MonetaryCredit.Services
         private readonly IRepository<CustomerSellCreditRecordList> _customerSellCreditListRepository;
         private readonly IRepository<CustomerActivityCreditRecordList> _customerActivityCreditListRepository;
         private readonly IRepository<CustomerBuyCreditRecordList> _customerBuyCreditListRepository;
-        
+        private readonly IMediator _mediator;
+
 
 
         public MonetaryCreditService(
@@ -29,7 +35,8 @@ namespace Leo.MonetaryCredit.Services
             IRepository<CustomerBalanceData> customerCreditDataRepository,
             IRepository<CustomerSellCreditRecordList> customerSellCreditListRepository,
             IRepository<CustomerActivityCreditRecordList> customerActivityCreditListRepository,
-            IRepository<CustomerBuyCreditRecordList> customerBuyCreditListRepository) 
+            IRepository<CustomerBuyCreditRecordList> customerBuyCreditListRepository,
+            IMediator mediator) 
         {
             _customerService = customerService;
             _customerRechangeListRepository = customerRechangeListRepository;
@@ -37,17 +44,42 @@ namespace Leo.MonetaryCredit.Services
             _customerSellCreditListRepository = customerSellCreditListRepository;
             _customerActivityCreditListRepository = customerActivityCreditListRepository;
             _customerBuyCreditListRepository = customerBuyCreditListRepository;
+            _mediator = mediator;
 
         }
 
         /// <summary>
         /// 获取用户相关信用货币数据
         /// </summary>
-        /// <param name="CustomerGuid"></param>
+        /// <param name="CustomerId"></param>
         /// <returns></returns>
-        public async Task<CustomerBalanceData> GetUserMonetaryCreditData(string CustomerGuid)
+        public async Task<CustomerBalanceData> GetUserMonetaryCreditData(string CustomerId)
         {
-            var result = await Task.FromResult(await _customerCreditDataRepository.GetByIdAsync(CustomerGuid));
+            var result = _customerCreditDataRepository.Table.FirstOrDefault(s=>s.Id==CustomerId);
+
+            if (result == null)
+            {
+                result = new CustomerBalanceData {
+                    ActionCreditRemain = 0,
+                    TotalUsedActionCredit = 0,
+                    BuyCreditRemain = 0,
+                    CurrentBalanceRemain = 0,
+                    TotalRechangeByCredit = 0,
+                    TotalRechangeByThird = 0,
+                    CustomerID = CustomerId,
+                    SellCreditRemain = 0,
+                    TotalUsedSellCredit = 0,
+                    UserCreditScore = 0,
+                    TotalUsedBuyCredit = 0,
+                    CreateDate = DateTime.Now,
+                };
+
+                await _customerCreditDataRepository.InsertAsync(result);
+
+                //event notification
+                await _mediator.EntityInserted(result);
+
+            }
 
             return result;
         }

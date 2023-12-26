@@ -125,10 +125,18 @@ public MonetaryCreditPaymentPlugin(
             await this.AddOrUpdatePluginTranslateResource(_translationService, _languageService, "Leo.MonetaryCredit.FriendlyName", "MonetaryCredit payment");
             await this.AddOrUpdatePluginTranslateResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.PaymentMethodDescription", "Pay by customer rechange remain");
             await this.AddOrUpdatePluginTranslateResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.MenusName", "MonetaryCredit");
+            await this.AddOrUpdatePluginTranslateResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.Navigation", "MonetaryCreditNavigation");
+            await this.AddOrUpdatePluginTranslateResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.MainInfo", "MainInfo");
+            await this.AddOrUpdatePluginTranslateResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.BalanceRecord", "BalanceRecord");
+            await this.AddOrUpdatePluginTranslateResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.BanlanceRechangeOrder", "BanlanceRechangeOrder");
+            await this.AddOrUpdatePluginTranslateResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.MonetaryOrder", "MonetaryOrder");
+            await this.AddOrUpdatePluginTranslateResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.BuyCreditRecord", "BuyCreditRecord");
+            await this.AddOrUpdatePluginTranslateResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.SellCreditRecord", "SellCreditRecord");
+            await this.AddOrUpdatePluginTranslateResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.ActivityCreditRecord", "ActivityCreditRecord");
 
 
             // 添加活动日志类型
-            foreach(var item in activityLogTypes)
+            foreach (var item in activityLogTypes)
             {
                 await _customerActivityService.InsertActivityType(item);
             }
@@ -145,9 +153,17 @@ public MonetaryCreditPaymentPlugin(
             await this.DeletePluginTranslationResource(_translationService, _languageService, "Leo.MonetaryCredit.FriendlyName");
             await this.DeletePluginTranslationResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.PaymentMethodDescription");
             await this.DeletePluginTranslationResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.MenusName");
+            await this.DeletePluginTranslationResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.Navigation");
+            await this.DeletePluginTranslationResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.MainInfo");
+            await this.DeletePluginTranslationResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.BalanceRecord");
+            await this.DeletePluginTranslationResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.BanlanceRechangeOrder");
+            await this.DeletePluginTranslationResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.MonetaryOrder");
+            await this.DeletePluginTranslationResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.BuyCreditRecord");
+            await this.DeletePluginTranslationResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.SellCreditRecord");
+            await this.DeletePluginTranslationResource(_translationService, _languageService, "Plugins.Leo.MonetaryCredit.ActivityCreditRecord");
 
             // 删除活动日志类型
-            foreach(var item in activityLogTypes)
+            foreach (var item in activityLogTypes)
             {
                 await _customerActivityService.DeleteActivityType(item);
             }

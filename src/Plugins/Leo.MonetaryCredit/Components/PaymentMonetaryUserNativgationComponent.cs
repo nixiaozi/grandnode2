@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Leo.MonetaryCredit.Components
 {
+    [ViewComponent(Name = "PaymentMonetaryUserNativgation")]
     public class PaymentMonetaryUserNativgationComponent: BaseViewComponent
     {
         private readonly IMediator _mediator;

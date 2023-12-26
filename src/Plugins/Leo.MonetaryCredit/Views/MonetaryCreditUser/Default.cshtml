@@ -1,4 +1,25 @@
-﻿
+﻿@model MonetaryCreditUserInfoModel
+@inject MonetaryCreditPaymentSettings monetaryCreditPaymentSettings
+@inject IPageHeadBuilder pagebuilder
+@{
+    Layout = "_TwoColumns";
+
+    pagebuilder.AddTitleParts(Loc["Plugins.Leo.MonetaryCredit.MenusName"]);
+}
 
 
-<div>Default</div>
+@section left
+{
+    @await Component.InvokeAsync("PaymentMonetaryUserNativgation", new { selectedTabId = MonetaryUserNavigationEnum.Info })
+}
+
+<section class="page account-page loyalty-points-page pl-lg-3 pt-3 pt-lg-0">
+    <h1 class="h2 generalTitle">@Loc["Account.MyAccount"] - @Loc["Account.LoyaltyPoints"]</h1>
+    <div class="loyalty-points-overview">
+        <div class="current-balance alert alert-success">当前账户余额：@(Model.CurrentBalanceRemain); 账户总金额@(Model.TotalRechangeByThird + @Model.TotalRechangeByCredit)(第三方充值金额：@(Model.TotalRechangeByThird);信用兑换金额@(Model.TotalRechangeByCredit)); </div>
+        <div class="current-balance alert alert-success">现有购买积分：@(Model.BuyCreditRemain);已使用购买积分：@(Model.TotalUsedBuyCredit); </div>
+        <div class="current-balance alert alert-success">现有销售积分：@(Model.SellCreditRemain);已使用销售积分：@(Model.TotalUsedSellCredit); </div>
+        <div class="current-balance alert alert-success">现有活动积分：@(Model.ActionCreditRemain);已使用活动积分：@(Model.TotalUsedActionCredit); </div>
+        <div class="current-balance alert alert-success">用户的信用分数：@(Model.UserCreditScore); </div>
+    </div>
+</section>

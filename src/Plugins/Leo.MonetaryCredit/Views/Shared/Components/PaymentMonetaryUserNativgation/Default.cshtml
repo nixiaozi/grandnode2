@@ -1,0 +1,101 @@
+﻿@model MonetaryUserNavigationModel
+<div id="block-account-navigation" class="block block-account-navigation mt-2">
+    <h2 class="h5"><strong>@Loc["Plugins.Leo.MonetaryCredit.Navigation"]</strong></h2>
+    <ul class="list viewBox">
+        @await Component.InvokeAsync("Widget", new { widgetZone = "monetaryuser_navigation_before" })
+        @if (!Model.HideInfo)
+        {
+            <li class="customer-info">
+                <a href="@Url.RouteUrl("Plugin.UserMonetaryCredit.MainInfo")" class="@if (Model.SelectedTab == MonetaryUserNavigationEnum.Info)
+                {
+                    <text>active</text>
+                }
+                else
+                {
+                    <text>inactive</text>
+                }"><b-icon icon="person"></b-icon> <span>@Loc["Plugins.Leo.MonetaryCredit.MainInfo"]</span></a>
+            </li>
+        }
+        @if (!Model.HideBalanceRecord)
+        {
+            <li class="customer-info">
+                <a href="@Url.RouteUrl("Plugin.UserMonetaryCredit.BalanceRecord")" class="@if (Model.SelectedTab == MonetaryUserNavigationEnum.BalanceRecord)
+                {
+                    <text>active</text>
+                }
+                else
+                {
+                    <text>inactive</text>
+                }"><b-icon icon="person"></b-icon> <span>@Loc["Plugins.Leo.MonetaryCredit.BalanceRecord"]</span></a>
+            </li>
+        }
+        @if (!Model.HideBanlanceRechangeOrder)
+        {
+            <li class="customer-info">
+                <a href="@Url.RouteUrl("Plugin.UserMonetaryCredit.BanlanceRechangeOrder")" class="@if (Model.SelectedTab == MonetaryUserNavigationEnum.BanlanceRechangeOrder)
+               {
+                    <text>active</text>
+                }
+                else
+                {
+                    <text>inactive</text>
+                }"><b-icon icon="person"></b-icon> <span>@Loc["Plugins.Leo.MonetaryCredit.BanlanceRechangeOrder"]</span></a>
+            </li>
+        }
+        @if (!Model.HideMonetaryOrder)
+        {
+            <li class="customer-info">
+                <a href="@Url.RouteUrl("Plugin.UserMonetaryCredit.MonetaryOrder")" class="@if (Model.SelectedTab == MonetaryUserNavigationEnum.MonetaryOrder)
+               {
+                    <text>active</text>
+                }
+                else
+                {
+                    <text>inactive</text>
+                }"><b-icon icon="person"></b-icon> <span>@Loc["Plugins.Leo.MonetaryCredit.MonetaryOrder"]</span></a>
+            </li>
+        }
+        @if (!Model.HideBuyCreditRecord)
+        {
+            <li class="customer-info">
+                <a href="@Url.RouteUrl("Plugin.UserMonetaryCredit.BuyCreditRecord")" class="@if (Model.SelectedTab == MonetaryUserNavigationEnum.BuyCreditRecord)
+               {
+                    <text>active</text>
+                }
+                else
+                {
+                    <text>inactive</text>
+                }"><b-icon icon="person"></b-icon> <span>@Loc["Plugins.Leo.MonetaryCredit.BuyCreditRecord"]</span></a>
+            </li>
+        }
+        @if (!Model.HideSellCreditRecord)
+        {
+            <li class="customer-info">
+                <a href="@Url.RouteUrl("Plugin.UserMonetaryCredit.SellCreditRecord")" class="@if (Model.SelectedTab == MonetaryUserNavigationEnum.SellCreditRecord)
+               {
+                    <text>active</text>
+                }
+                else
+                {
+                    <text>inactive</text>
+                }"><b-icon icon="person"></b-icon> <span>@Loc["Plugins.Leo.MonetaryCredit.SellCreditRecord"]</span></a>
+            </li>
+        }
+        @if (!Model.HideActivityCreditRecord)
+        {
+            <li class="customer-info">
+                <a href="@Url.RouteUrl("Plugin.UserMonetaryCredit.ActivityCreditRecord")" class="@if (Model.SelectedTab == MonetaryUserNavigationEnum.ActivityCreditRecord)
+               {
+                    <text>active</text>
+                }
+                else
+                {
+                    <text>inactive</text>
+                }"><b-icon icon="person"></b-icon> <span>@Loc["Plugins.Leo.MonetaryCredit.ActivityCreditRecord"]</span></a>
+            </li>
+        }
+
+        @await Component.InvokeAsync("Widget", new { widgetZone = "monetaryuser_navigation_after" })
+    </ul>
+</div>
+
