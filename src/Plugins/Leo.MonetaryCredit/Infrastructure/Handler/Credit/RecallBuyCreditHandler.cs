@@ -14,9 +14,9 @@ namespace Leo.MonetaryCredit.Infrastructure.Handler
 {
     public class RecallBuyCreditHandler : INotificationHandler<RecallRechangeEvent>
     {
-        private readonly IRepository<CustomerBalanceRechangeList> _customerRechangeListRepository;
+        private readonly IRepository<CustomerBalanceRechangeOrder> _customerRechangeListRepository;
 
-        public RecallBuyCreditHandler(IRepository<CustomerBalanceRechangeList> customerRechangeListRepository)
+        public RecallBuyCreditHandler(IRepository<CustomerBalanceRechangeOrder> customerRechangeListRepository)
         {
             _customerRechangeListRepository = customerRechangeListRepository;
         }

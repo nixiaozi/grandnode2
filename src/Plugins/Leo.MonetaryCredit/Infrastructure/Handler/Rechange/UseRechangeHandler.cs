@@ -13,9 +13,9 @@ namespace Leo.MonetaryCredit.Infrastructure.Handler
 {
     public class UseRechangeHandler : INotificationHandler<UseRechangeEvent>
     {
-        private readonly IRepository<CustomerBalanceRechangeList> _customerRechangeListRepository;
+        private readonly IRepository<CustomerBalanceRechangeOrder> _customerRechangeListRepository;
 
-        public UseRechangeHandler(IRepository<CustomerBalanceRechangeList> customerRechangeListRepository)
+        public UseRechangeHandler(IRepository<CustomerBalanceRechangeOrder> customerRechangeListRepository)
         {
             _customerRechangeListRepository = customerRechangeListRepository;
 
@@ -25,7 +25,7 @@ namespace Leo.MonetaryCredit.Infrastructure.Handler
 
         public async Task Handle(UseRechangeEvent notification, CancellationToken cancellationToken)
         {
-            CustomerBalanceRechangeList model = new CustomerBalanceRechangeList();
+            CustomerBalanceRechangeOrder model = new CustomerBalanceRechangeOrder();
 
             await _customerRechangeListRepository.InsertAsync(model);
 

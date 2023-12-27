@@ -20,7 +20,7 @@ namespace Leo.MonetaryCredit.Services
     public class MonetaryCreditService : IMonetaryCreditService
     {
         private readonly ICustomerService _customerService;
-        private readonly IRepository<CustomerBalanceRechangeList> _customerRechangeListRepository;
+        private readonly IRepository<CustomerBalanceRechangeOrder> _customerRechangeListRepository;
         private readonly IRepository<CustomerBalanceData> _customerCreditDataRepository;
         private readonly IRepository<CustomerSellCreditRecordList> _customerSellCreditListRepository;
         private readonly IRepository<CustomerActivityCreditRecordList> _customerActivityCreditListRepository;
@@ -31,7 +31,7 @@ namespace Leo.MonetaryCredit.Services
 
         public MonetaryCreditService(
             ICustomerService customerService,
-            IRepository<CustomerBalanceRechangeList> customerRechangeListRepository,
+            IRepository<CustomerBalanceRechangeOrder> customerRechangeListRepository,
             IRepository<CustomerBalanceData> customerCreditDataRepository,
             IRepository<CustomerSellCreditRecordList> customerSellCreditListRepository,
             IRepository<CustomerActivityCreditRecordList> customerActivityCreditListRepository,
@@ -127,7 +127,7 @@ namespace Leo.MonetaryCredit.Services
 
 
             
-           var rechangeListResult = await  _customerRechangeListRepository.InsertAsync(new CustomerBalanceRechangeList {
+           var rechangeListResult = await  _customerRechangeListRepository.InsertAsync(new CustomerBalanceRechangeOrder {
                 CreateDateTime = DateTime.Now,
                 CustomerID = paymentTransaction.CustomerId,
                 RechangeChangeID = paymentTransaction.OrderCode,
@@ -154,6 +154,10 @@ namespace Leo.MonetaryCredit.Services
 
             return processPaymentResult;
         }
+
+
+        public async Task<> 
+
 
 
 

@@ -12,7 +12,7 @@ namespace Leo.MonetaryCredit.Domain
     /// <summary>
     /// 余额充值单列表
     /// </summary>
-    public class CustomerBalanceRechangeList : BaseEntity
+    public class CustomerBalanceRechangeOrder : BaseEntity
     {
         /// <summary>
         /// 用户编号(主键字段)
