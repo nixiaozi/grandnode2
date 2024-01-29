@@ -37,7 +37,15 @@ namespace Leo.MonetaryCredit.Domain
         /// <summary>
         /// 关联的上一个Id
         /// </summary>
-        public string ReleateId { get; set; }
+        public string LastID { get; set; }
+
+
+        /// <summary>
+        /// 记录的变更类型
+        /// </summary>
+        public ChangeType TheChangeType { get; set; }
+
+
 
         /// <summary>
         /// 创建时间

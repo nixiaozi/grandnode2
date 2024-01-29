@@ -14,11 +14,11 @@ namespace Leo.MonetaryCredit.Infrastructure.Handler
 {
     public class AddActivityCreditHandler : INotificationHandler<AddActivityCreditEvent>
     {
-        private readonly IRepository<CustomerBalanceRechangeOrder> _customerRechangeListRepository;
+        private readonly IRepository<CustomerActivityCreditRecordList> _customerActivityCreditRecordList;
 
-        public AddActivityCreditHandler(IRepository<CustomerBalanceRechangeOrder> customerRechangeListRepository)
+        public AddActivityCreditHandler(IRepository<CustomerActivityCreditRecordList> customerActivityCreditRecordList)
         {
-            _customerRechangeListRepository = customerRechangeListRepository;
+            _customerActivityCreditRecordList = customerActivityCreditRecordList;
 
 
         }
@@ -26,9 +26,8 @@ namespace Leo.MonetaryCredit.Infrastructure.Handler
 
         public async Task Handle(AddActivityCreditEvent notification, CancellationToken cancellationToken)
         {
-            CustomerBalanceRechangeOrder model = new CustomerBalanceRechangeOrder();
 
-            await _customerRechangeListRepository.InsertAsync(model);
+            await _customerActivityCreditRecordList.InsertAsync(notification.CustomerActivityCreditRecordList);
 
             // 
 

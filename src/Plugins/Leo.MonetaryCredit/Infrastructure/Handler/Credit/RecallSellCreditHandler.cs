@@ -2,6 +2,7 @@
 using Grand.Infrastructure.Events;
 using Leo.MonetaryCredit.Domain;
 using Leo.MonetaryCredit.Models.Events;
+using Leo.MonetaryCredit.Services;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,11 @@ namespace Leo.MonetaryCredit.Infrastructure.Handler
 {
     public class RecallSellCreditHandler : INotificationHandler<RecallSellCreditEvent>
     {
-        private readonly IRepository<CustomerBalanceRechangeOrder> _customerRechangeListRepository;
+        private readonly IMonetaryCreditService _monetaryCreditService;
 
-        public RecallSellCreditHandler(IRepository<CustomerBalanceRechangeOrder> customerRechangeListRepository)
+        public RecallSellCreditHandler(IMonetaryCreditService monetaryCreditService)
         {
-            _customerRechangeListRepository = customerRechangeListRepository;
+            _monetaryCreditService = monetaryCreditService;
         }
 
         public Task Handle(RecallSellCreditEvent notification, CancellationToken cancellationToken)

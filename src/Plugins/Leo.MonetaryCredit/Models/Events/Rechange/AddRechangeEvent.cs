@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Leo.MonetaryCredit.Domain;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,16 @@ namespace Leo.MonetaryCredit.Models.Events
 {
     public class AddRechangeEvent : INotification
     {
+        public AddRechangeEvent(CustomerBalanceRecordList customerBalanceRecordList)
+        {
+            CustomerBalanceRecordList = customerBalanceRecordList;
+        }
+
+
         /// <summary>
-        /// 需要撤回的订单编号
+        /// 信用货币余额账户余额增加的变动记录
         /// </summary>
-        public string RechangeId { get;set; }
+        public CustomerBalanceRecordList CustomerBalanceRecordList { get;set; }
 
     }
 }

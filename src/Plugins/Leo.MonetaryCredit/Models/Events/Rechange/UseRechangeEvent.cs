@@ -9,6 +9,11 @@ namespace Leo.MonetaryCredit.Models.Events
 {
     public class UseRechangeEvent : INotification
     {
+        public UseRechangeEvent()
+        {
+
+        }
+
         /// <summary>
         /// 需要撤回的订单编号
         /// </summary>

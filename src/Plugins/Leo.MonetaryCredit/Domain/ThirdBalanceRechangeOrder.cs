@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 namespace Leo.MonetaryCredit.Domain
 {
     /// <summary>
-    /// 余额充值单列表
+    /// 第三方的充值订单
     /// </summary>
-    public class CustomerBalanceRechangeOrder : BaseEntity
+    public class ThirdBalanceRechangeOrder : BaseEntity
     {
         /// <summary>
         /// 用户编号(主键字段)
@@ -25,19 +25,15 @@ namespace Leo.MonetaryCredit.Domain
         public string RechangeChangeID { get; set; }
 
         /// <summary>
+        /// 充值方式
+        /// </summary>
+        public string RechangeChangeType { get; set; } 
+
+        /// <summary>
         /// 充值金额
         /// </summary>
         public decimal RechangeMoney { get; set; }
 
-        /// <summary>
-        /// 变化后的账户金额
-        /// </summary>
-        public decimal ResultMoney { get; set; }
-
-        /// <summary>
-        /// 关联的上一个Id
-        /// </summary>
-        public string ReleateId { get; set; }
 
         /// <summary>
         /// 创建时间

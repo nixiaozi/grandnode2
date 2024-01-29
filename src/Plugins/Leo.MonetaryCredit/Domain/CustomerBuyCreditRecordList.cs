@@ -1,4 +1,5 @@
 ﻿using Grand.Domain;
+using Leo.MonetaryCredit.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Leo.MonetaryCredit.Domain
         /// <summary>
         /// 引起积分变化的事件名称
         /// </summary>
-        public string RelateName { get; set; }
+        public string RelateNameTag { get; set; }
 
         /// <summary>
         /// 积分有变化的用户
@@ -30,7 +31,7 @@ namespace Leo.MonetaryCredit.Domain
         public decimal Amount { get; set; }
 
         /// <summary>
-        /// 积分变化后的当前金额
+        /// 积分变化后的当前积分
         /// </summary>
         public decimal AmountRemain { get; set; }
 
@@ -38,6 +39,12 @@ namespace Leo.MonetaryCredit.Domain
         /// 该用户积分变化的上一条信息
         /// </summary>
         public string LastID { get; set; }
+
+
+        /// <summary>
+        /// 记录的变更类型
+        /// </summary>
+        public ChangeType TheChangeType { get; set; }
 
         /// <summary>
         /// 记录的创建时间

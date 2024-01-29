@@ -1,6 +1,7 @@
 ﻿using Grand.Domain.Data;
 using Leo.MonetaryCredit.Domain;
 using Leo.MonetaryCredit.Models.Events;
+using Leo.MonetaryCredit.Services;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,11 @@ namespace Leo.MonetaryCredit.Infrastructure.Handler
 {
     public class UseCreditHandler : INotificationHandler<UseRechangeEvent>
     {
-        private readonly IRepository<CustomerBalanceRechangeOrder> _customerRechangeListRepository;
+        private readonly IMonetaryCreditService _monetaryCreditService;
 
-        public UseCreditHandler(IRepository<CustomerBalanceRechangeOrder> customerRechangeListRepository)
+        public UseCreditHandler(IMonetaryCreditService monetaryCreditService)
         {
-            _customerRechangeListRepository = customerRechangeListRepository;
+            _monetaryCreditService = monetaryCreditService;
 
 
         }
@@ -25,10 +26,7 @@ namespace Leo.MonetaryCredit.Infrastructure.Handler
 
         public async Task Handle(UseRechangeEvent notification, CancellationToken cancellationToken)
         {
-            CustomerBalanceRechangeOrder model = new CustomerBalanceRechangeOrder();
-
-            await _customerRechangeListRepository.InsertAsync(model);
-
+            
             // 
 
         }

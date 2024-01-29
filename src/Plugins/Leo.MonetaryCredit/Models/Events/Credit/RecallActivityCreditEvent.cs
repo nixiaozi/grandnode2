@@ -9,10 +9,15 @@ namespace Leo.MonetaryCredit.Models.Events
 {
     public class RecallActivityCreditEvent : INotification
     {
+        public RecallActivityCreditEvent(string recordID)
+        {
+            RecordID = recordID;
+        }
+
         /// <summary>
-        /// 需要撤回的订单编号
+        /// 要撤回的记录编号
         /// </summary>
-        public string RechangeId { get;set; }
+        public string RecordID { get;set; }
 
     }
 }

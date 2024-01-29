@@ -12,23 +12,23 @@ using System.Threading.Tasks;
 
 namespace Leo.MonetaryCredit.Infrastructure.Handler
 {
-    public class AddBuyCreditHandler : INotificationHandler<AddRechangeEvent>
+    public class AddBuyCreditHandler : INotificationHandler<AddBuyCreditEvent>
     {
-        private readonly IRepository<CustomerBalanceRechangeOrder> _customerRechangeListRepository;
+        private readonly IRepository<CustomerBuyCreditRecordList> _customerBuyCreditRecordList;
 
-        public AddBuyCreditHandler(IRepository<CustomerBalanceRechangeOrder> customerRechangeListRepository)
+        public AddBuyCreditHandler(IRepository<CustomerBuyCreditRecordList> customerBuyCreditRecordList)
         {
-            _customerRechangeListRepository = customerRechangeListRepository;
+            _customerBuyCreditRecordList= customerBuyCreditRecordList;
 
 
         }
 
 
-        public async Task Handle(AddRechangeEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(AddBuyCreditEvent notification, CancellationToken cancellationToken)
         {
-            CustomerBalanceRechangeOrder model = new CustomerBalanceRechangeOrder();
+            
 
-            await _customerRechangeListRepository.InsertAsync(model);
+            await _customerBuyCreditRecordList.InsertAsync(notification.CustomerBuyCreditRecordList);
 
             // 
 
